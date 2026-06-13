@@ -9,6 +9,8 @@ from dotenv import load_dotenv
 if "classes" not in st.session_state:
     st.session_state.classes = []
 
+
+#app interface
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=api_key)
@@ -63,7 +65,7 @@ if st.sidebar.button("Add Assignment"):
     else:
         st.sidebar.error("Please enter an assignment name.")
 
-
+#store classes
 st.sidebar.header("Class information")
 classame= st.sidebar.text_input("Class name")
 start = st.sidebar.number_input("What time does the class start", min_value=0.00, max_value=24.00)
@@ -83,12 +85,12 @@ if st.sidebar.button("Add Class"):
 
 
    
-
+#tabs
 st.header("Assignments")
 
 tab1, tab2, tab3, tab4= st.tabs(["📖Assignments📖", "📅Calender📅", "📄Details📄", "🗓️Schedule🗓️"])
 
-
+#generating the schedule
 def generate_schedule(assignments, minutes_available, sl, exinfo):
     assignment_text = ""
 
@@ -125,7 +127,7 @@ Try to keep the same format for your schedule everytime
     return response.output_text
 
 
-
+#tab commands
 with tab1:
     df = pd.DataFrame(st.session_state.assignments)
 
@@ -230,10 +232,8 @@ with tab4:
 
             st.write(schedule)
 
-#t.divider
-#f "showchat" not in st.session_state:
-   #st.session_state.show_chat = False
    
+
 
 if "selected_assignment" in st.session_state:
     assignment = st.session_state.selected_assignment
